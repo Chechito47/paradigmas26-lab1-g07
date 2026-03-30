@@ -2,17 +2,16 @@ object Main {
   def main(args: Array[String]): Unit = {
     val header = s"Reddit Post Parser\n${"=" * 40}"
 
-    val subscriptions: List[FileIO.Subscription] = FileIO.readSubscriptions()
+    val subscriptions: Option[List[FileIO.Subscription]] = FileIO.readSubscriptions()
 
-    val allPosts: List[FileIO.Post] = subscriptions.flatMap { case (name, url) =>
-      println(s"Fetching posts from : r/$name...")
-
-      val rawJson = FileIO.downloadFeed(url)
-
-      FileIO.parsePosts(name, rawJson)
+    val allPosts: Option[List[FileIO.Post]] = subscriptions.map { subs =>
+      subs.flatMap { case (name, url) =>
+        val rawJsonOpt = FileIO.downloadFeed(url)
+        rawJsonOpt.toList.flatMap(rawJson => FileIO.parsePosts(name, rawJson).getOrElse(Nil))
+      }
     }
 
-    val allValidPosts: List[(String, String, String, String)] = allPosts.filter(TextProcessing.isValidPost)
+    val allValidPosts: List[FileIO.Post] = allPosts.getOrElse(Nil).filter(TextProcessing.isValidPost)
 
     /*val output = allPosts
       .map { case (url, posts) => Formatters.formatSubscription(url, posts) }

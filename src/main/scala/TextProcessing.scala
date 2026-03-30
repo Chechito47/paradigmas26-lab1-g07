@@ -1,7 +1,12 @@
 object TextProcessing {
-  def formatDateFromUTC(timestamp: Long): String = {
-    val date = new java.util.Date(timestamp * 1000)
-    date.toString
+  def formatDateFromUTC(timestamp: Long): Option[String] = {
+    try {
+      val date = new java.util.Date(timestamp * 1000)
+      Some(date.toString)
+    }
+    catch {
+      case _: Exception => None
+    }
   }
 
   //funcion que devuelve true si post con selftext vacío
