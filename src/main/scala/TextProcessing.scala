@@ -8,7 +8,7 @@ object TextProcessing {
   def isValidSelftext (Post: (String, String, String, String)): Boolean = { 
     var selftext = Post._3
     selftext.trim.nonEmpty // true si no es vacio
-   }
+  }
 
   //función que filtra posts que tengan solo espacios = isValidSelftext
 
@@ -22,6 +22,4 @@ object TextProcessing {
   def isValidPost (Post: (String, String, String, String)) : Boolean = {
     isValidSelftext(Post) && isValidTitle(Post)
   }
-  
-  
-  }
+}
