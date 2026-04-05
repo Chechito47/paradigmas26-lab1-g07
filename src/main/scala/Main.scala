@@ -13,6 +13,14 @@ object Main {
 
     val allValidPosts: List[FileIO.Post] = allPosts.getOrElse(Nil).filter(TextProcessing.isValidPost)
 
+    //Imprimimos posts validos
+    allValidPosts.foreach { case (subreddit, title, selftext, date) =>
+      println(s"$subreddit -> $title -> $selftext -> $date")
+    }
+
+    //Imprimimos conteo de palabras
+    val words = CountWords.countw(allValidPosts)
+    println(s"$words")
     /*val output = allPosts
       .map { case (url, posts) => Formatters.formatSubscription(url, posts) }
       .mkString("\n")
