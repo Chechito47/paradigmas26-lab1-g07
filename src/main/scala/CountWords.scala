@@ -22,7 +22,7 @@ object CountWords {
     "what's", "when", "when's", "where", "where's", "which", "while", "who",
     "who's", "whom", "why", "why's", "with", "won't", "would",
     "wouldn't", "you", "you'd", "you'll", "you're", "you've", "your", "yours",
-    "yourself", "yourselves",
+    "yourself", "yourselves", 
 
     // Spanish (puse estas stopwords pero no hace falta en si ya que los subreddits estan en ingles
     "el", "la", "los", "las", "un", "una", "unos", "unas", "y", "e", "o", "u",
@@ -34,10 +34,10 @@ object CountWords {
     //Paso 1.a: Obtengo el texto (selftext)
     val textos = posts.map(e => e._3)
     //Paso 1.b: Separo en palabras ignorando espacios
-    val words = textos.flatMap(t => t.split(" "))
+    val words = textos.flatMap(t => t.replaceAll("[^a-zA-Z]", " ").split(" "))
 
     //Paso 2: Filtro que palabras no sean vacias, empiecen con mayuscula y no sean stopwords
-    val wordsFiltered = words.filter(p => p.nonEmpty && p.head.isUpper && !stopwords.contains(p))
+    val wordsFiltered = words.filter(p => p.nonEmpty && p.head.isUpper && !stopwords.contains(p.toLowerCase))
 
     //Paso 3: Cuento el numero de ocurrencias de cada palabra
     //Paso 3.a: Agrupo las palabras iguales
