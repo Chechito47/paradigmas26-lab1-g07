@@ -6,7 +6,7 @@ import scala.util.Using
 object FileIO {
 
   type Subscription = (String, String) // (subredditName, url) 
-  type Post = (String, String, String, String) // (subreddit, title, selftext, date)
+  type Post = (String, String, String, String, Int, String) // (subreddit, title, selftext, date, score, permalink)
 
   // Pure function to read subscriptions from a JSON file
   def readSubscriptions(): Option[List[Subscription]] = {
@@ -47,9 +47,11 @@ object FileIO {
         val selftext = (d \ "selftext").extract[String]
         val createdUtc = (d \ "created_utc").extract[Double].toLong
         val date = Formatters.formatDateFromUTC(createdUtc)
+        val score = (d \ "score").extract[Int]
+        val permalink = (d \ "permalink").extract[String]
 
         // Return
-        (subredditName, title, selftext, date)
+        (subredditName, title, selftext, date, score, permalink)
       })
     }
     catch {

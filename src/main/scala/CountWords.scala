@@ -1,6 +1,6 @@
 object CountWords {
   type Subscription = (String, String) // (subredditName, url) 
-  type Post = (String, String, String, String) // (subreddit, title, selftext, date)
+  type Post = (String, String, String, String, Int, String) // (subreddit, title, selftext, date, score, permalink)
 
   val stopwords = List(    "the", "about", "above", "after", "again", "against", "all", "am", "an",
     "and", "any", "are", "aren't", "as", "at", "be", "because", "been",
