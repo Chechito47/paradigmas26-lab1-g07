@@ -33,5 +33,8 @@ object Main {
       val first5 = Stats.getFirst5(postsReddit)
       Formatters.printReport(name, stats, countWords, first5)
     }
+
+    val subs: List[FileIO.Subscription] = subscriptions.getOrElse(Nil)
+    InteractiveMenu.run(postsBySubreddit, subs)
   }
 }
