@@ -1,4 +1,5 @@
 object TextProcessing {
+  
   def formatDateFromUTC(timestamp: Long): Option[String] = {
     try {
       val date = new java.util.Date(timestamp * 1000)
@@ -9,22 +10,22 @@ object TextProcessing {
     }
   }
 
-  //funcion que devuelve true si post con selftext vacío
-  def isValidSelftext (Post: (String, String, String, String, Int, String)): Boolean = { 
-    var selftext = Post._3
-    selftext.trim.nonEmpty // true si no es vacio
+  // Función que devuelve true si post con selftext vacío
+  def isValidSelftext (post: FileIO.Post): Boolean = { 
+    var selftext = post._3
+    selftext.trim.nonEmpty
   }
 
-  //función que filtra posts que tengan solo espacios = isValidSelftext
+  // Función que filtra posts que tengan solo espacios = isValidSelftext
 
-  //funcion que filtra posts que no tenga titulo
-  def isValidTitle (Post: (String, String, String, String, Int, String)) : Boolean = {
-    var text = Post._2
+  // Función que filtra posts que no tenga tittle
+  def isValidTitle (post: FileIO.Post) : Boolean = {
+    var text = post._2
     text.trim.nonEmpty
   }
 
-  //funcion que dice si un post es valido
-  def isValidPost (Post: (String, String, String, String, Int, String)) : Boolean = {
-    isValidSelftext(Post) && isValidTitle(Post)
+  // Función que dice si un post es válido
+  def isValidPost (post: FileIO.Post) : Boolean = {
+    isValidSelftext(post) && isValidTitle(post)
   }
 }

@@ -6,7 +6,7 @@ import scala.util.Using
 object FileIO {
 
   type Subscription = (String, String) // (subredditName, url) 
-  type Post = (String, String, String, String, Int, String) // (subreddit, title, selftext, date, score, permalink)
+  type Post = (String, String, String, String, Int, String) // (subreddit, title, selftext, date, score, postLink)
 
   // Pure function to read subscriptions from a JSON file
   def readSubscriptions(): Option[List[Subscription]] = {
@@ -16,15 +16,13 @@ object FileIO {
       
         implicit val formats = DefaultFormats
 
-        parse(content) match {
-          case JArray(items) => items.map { x =>
+        parse(content).children.map { x =>
           (
             (x \ "name").extract[String],
             (x \ "url").extract[String]
           )
         }
-        case _ => List.empty
-      }})
+      })
     }
     catch {
       case _: Exception => None
@@ -37,10 +35,8 @@ object FileIO {
       implicit val formats = DefaultFormats
       val json = parse(jsonRaw)
 
-      // Navega la estructura data -> children (transforma en lista)
       val children = (json \ "data" \ "children").children
 
-      // Usamos map para transformar cada elemento del JSON en un Post
       Some(children.map { child =>
         val d = child \ "data"
         val title = (d \ "title").extract[String]
@@ -50,7 +46,6 @@ object FileIO {
         val score = (d \ "score").extract[Int]
         val permalink = (d \ "permalink").extract[String]
 
-        // Return
         (subredditName, title, selftext, date, score, permalink)
       })
     }
@@ -63,7 +58,7 @@ object FileIO {
   def downloadFeed(url: String): Option[String] = {
     try {
       // Usamos Using para evitar resource leaks en la conexión
-      Some( Using.resource(Source.fromURL(url)) { source =>
+      Some(Using.resource(Source.fromURL(url)) { source =>
       source.mkString
       })
     }
