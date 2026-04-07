@@ -25,13 +25,14 @@ object Main {
         Nil
     }
 
-    val postsBySubreddit = allValidPosts.groupBy { case (subreddit, _, _, _, _, _) => subreddit }
+    val postsBySubreddit: Map[String, List[FileIO.Post]] = allValidPosts.groupBy { 
+      case (subreddit, _, _, _, _, _) => subreddit }
 
     postsBySubreddit.foreach { case (name, postsReddit) =>
-      val countWords = CountWords.countw(postsReddit)
+      val countWords = CountWords.countW(postsReddit)
       val stats = Stats.getStats(postsReddit)
-      val first5 = Stats.getFirst5(postsReddit)
-      Formatters.printReport(name, stats, countWords, first5)
+      val firstFive = Stats.getFirstFive(postsReddit)
+      Formatters.printReport(name, stats, countWords, firstFive)
     }
 
     val subs: List[FileIO.Subscription] = subscriptions.getOrElse(Nil)

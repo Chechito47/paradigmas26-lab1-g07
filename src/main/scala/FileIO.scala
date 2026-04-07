@@ -6,7 +6,7 @@ import scala.util.Using
 object FileIO {
 
   type Subscription = (String, String) // (subredditName, url) 
-  type Post = (String, String, String, String, Int, String) // (subreddit, title, selftext, date, score, postLink)
+  type Post = (String, String, String, String, Int, String) // (subreddit, title, selftext, date, score, permalink)
 
   // Pure function to read subscriptions from a JSON file
   def readSubscriptions(): Option[List[Subscription]] = {

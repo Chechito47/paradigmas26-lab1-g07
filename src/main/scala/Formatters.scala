@@ -13,7 +13,7 @@ object Formatters {
     format.format(date)
   }
 
-  def printReport(name: String, totalScore: Int, words: Map[String, Int], first5: List[FileIO.Post]): Unit = {
+  def printReport(name: String, totalScore: Int, words: Map[String, Int], firstFive: List[FileIO.Post]): Unit = {
     println(s"===$name===")
     println(s"The score is: $totalScore")
 
@@ -22,8 +22,8 @@ object Formatters {
       println(s"$word: $count")
     }
 
-    first5.foreach { case (subreddit, title, selftext, date, score, postLink) =>
-      println(s"$title, $date, https://www.reddit.com$postLink")
+    firstFive.foreach { case (subreddit, title, selftext, date, score, permalink) =>
+      println(s"$title, $date, https://www.reddit.com$permalink")
     }
   }
 }

@@ -10,7 +10,7 @@ object Stats {
     sumScores
   }
 
-  def getFirst5(posts: List[FileIO.Post]): List[FileIO.Post] = {
+  def getFirstFive(posts: List[FileIO.Post]): List[FileIO.Post] = {
     val first = posts.take(5)
 
     first

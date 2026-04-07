@@ -23,14 +23,14 @@ object InteractiveMenu {
 
   // Genera la vista completa de un post individual
   def renderPost(post: Post): String = {
-    val (subreddit, title, selftext, date, score, postLink) = post
+    val (subreddit, title, selftext, date, score, permalink) = post
     s"""
     ${"─" * 70}
     Subreddit : r/$subreddit
     Título    : $title
     Fecha     : $date
     Score     : $score
-    URL       : https://www.reddit.com$postLink
+    URL       : https://www.reddit.com$permalink
     ${"─" * 70}
     $selftext
     ${"─" * 70}"""

@@ -22,7 +22,7 @@ object CountWords {
     "you'd", "you'll", "you're", "you've", "your", "yours", "yourself", "yourselves"
   )
 
-  def countw(posts: List[FileIO.Post]): Map[String, Int] = {
+  def countW(posts: List[FileIO.Post]): Map[String, Int] = {
     val texts = posts.map(e => e._3)
     val words = texts.flatMap(t => t.replaceAll("[^a-zA-Z]", " ").split(" "))
     val wordsFiltered = words.filter(p => p.nonEmpty && p.head.isUpper && !stopwords.contains(p.toLowerCase))
