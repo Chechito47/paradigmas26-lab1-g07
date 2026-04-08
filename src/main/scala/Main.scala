@@ -35,7 +35,8 @@ object Main {
       Formatters.printReport(name, stats, countWords, firstFive)
     }
 
-    val subs: List[FileIO.Subscription] = subscriptions.getOrElse(Nil).filter { case (name, _) => postsBySubreddit.contains(name) }
+    val subs: List[FileIO.Subscription] = subscriptions.getOrElse(Nil).filter { case (name, _) => 
+      postsBySubreddit.contains(name) }
     InteractiveMenu.run(postsBySubreddit, subs)
   }
 }
